@@ -1,6 +1,6 @@
 from instapy import InstaPy
 from credentials import username, password
-from random import shuffle
+from random import sample
 
 session = InstaPy(username=username, password=password, headless_browser=True)
 session.login()
@@ -40,8 +40,10 @@ tags = ['sp', 'saopaulo', 'sampa', 'splovers', 'saopaulocity', 'sp4you',
     'saopaulonline', 'ilovesp', 'cidadedagaroa', 'sampacity', 'sampalovers',
     'amorpaulista', 'saopaulo_originals', 'igerssp', 'spcity', 'brazil', 'paulista', 'ibira']
 
-session.story_by_tags(shuffle(tags))
+number_of_tags = min(3, len(tags))
 
-session.like_by_tags(shuffle(tags), amount=25, randomize=True)
+session.story_by_tags(sample(tags, number_of_tags))
+
+session.like_by_tags(sample(tags, number_of_tags), amount=1, randomize=True)
 
 session.end()
