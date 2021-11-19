@@ -1,6 +1,7 @@
 from instapy import InstaPy
 from credentials import username, password
-from random import sample
+import random
+from datetime import datetime
 
 session = InstaPy(username=username, password=password, headless_browser=True)
 session.login()
@@ -8,7 +9,7 @@ session.login()
 session.set_relationship_bounds(enabled=True, max_followers=10000)
 
 session.set_do_like(enabled=True, percentage=80)
-session.set_dont_like(['bolsonaro', 'b17', 'bolsonaro2022', 'b22'])
+session.set_dont_like(['bolsonaro', 'b17', 'bolsonaro2022', 'b22', 'direita'])
 
 session.set_do_follow(enabled=True, percentage=5)
 
@@ -40,10 +41,15 @@ tags = ['sp', 'saopaulo', 'sampa', 'splovers', 'saopaulocity', 'sp4you',
     'saopaulonline', 'ilovesp', 'cidadedagaroa', 'sampacity', 'sampalovers',
     'amorpaulista', 'saopaulo_originals', 'igerssp', 'spcity', 'brazil', 'paulista', 'ibira']
 
-number_of_tags = min(3, len(tags))
+#1: 15min
+#2: 15min
+#3: 25,63min
+number_of_tags = min(2, len(tags))
 
-session.story_by_tags(sample(tags, number_of_tags))
 
-session.like_by_tags(sample(tags, number_of_tags), amount=1, randomize=True)
+random.seed(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+session.story_by_tags(random.sample(tags, number_of_tags))
+
+session.like_by_tags(random.sample(tags, number_of_tags), amount=1, randomize=True)
 
 session.end()
